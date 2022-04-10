@@ -33,10 +33,20 @@ function onGalleryContainerClick(event) {
 }
 
 function createLightbox() {
-  const instance = basicLightbox.create(`
-        <img src="${event.target.dataset.source}">`);
+  const instance = basicLightbox.create(
+    `
+        <img src="${event.target.dataset.source}">`,
+    {
+      onShow(instance) {
+        window.addEventListener("keydown", RemoveEventListener);
+      },
+
+      onClose(instance) {
+        window.removeEventListener("keydown", RemoveEventListener);
+      },
+    }
+  );
   instance.show();
-  window.addEventListener("keydown", RemoveEventListener);
 
   function RemoveEventListener(event) {
     if (event.code !== "Escape") {
@@ -44,7 +54,5 @@ function createLightbox() {
     }
 
     instance.close();
-
-    window.removeEventListener("keydown", RemoveEventListener);
   }
 }
