@@ -17,8 +17,11 @@ function addGallery(value) {
 }
 
 function makeNewGallery() {
-  let newgallery = new SimpleLightbox(".gallery a");
-  newgallery.on("show.simplelightbox");
+  new SimpleLightbox(".gallery a", {
+    captions: true,
+    captionsData: "alt",
+    captionDelay: 250,
+  });
 }
 
 addGallery(galleryItems);
